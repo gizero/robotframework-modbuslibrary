@@ -128,3 +128,21 @@ class RfModbusMaster(object):
             self._process_error(except_object=error,
                     msg="Could not write datas (%s) to register (%d)" % (datas, starting_address))
 
+    def write_multiple_coils(self, slave, starting_address, datas):
+        """
+            Write coils
+
+            <slave> is the slave address to write to
+            <starting_address> is the register start address
+            <datas> are the datas to be written to <slave>
+        """
+        try:
+            slave = int(slave)
+            starting_address = int(starting_address)
+            registers = list()
+            registers = eval(datas)
+            self.master.execute(slave=slave, function_code=cst.WRITE_MULTIPLE_COILS,
+                                starting_address=starting_address, output_value=registers)
+        except modbus_tk.modbus.ModbusError, error:
+            self._process_error(except_object=error,
+                    msg="Could not write datas (%s) to register (%d)" % (datas, starting_address))
