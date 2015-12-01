@@ -113,7 +113,7 @@ class RfModbusMaster(object):
         """
             Write registers
 
-            <slave> is the slave address to read from
+            <slave> is the slave address to write to
             <starting_address> is the register start address
             <datas> are the datas to be written to <slave>
         """
