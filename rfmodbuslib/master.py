@@ -91,6 +91,24 @@ class RfModbusMaster(object):
         except modbus_tk.modbus.ModbusError, error:
             self._process_error(except_object=error, msg="Could not read register: %d" % starting_address)
 
+    def read_discrete_inputs(self, slave, starting_address, quantity_of_x=0):
+        """
+            Read discrete inputs
+
+            <slave> is the slave address to read from
+            <starting_address> is the register start address
+            <quantity_of_x> is the number of value to gather
+        """
+        try:
+            slave = int(slave)
+            starting_address = int(starting_address)
+            quantity_of_x = int(quantity_of_x)
+            result = self.master.execute(slave=slave, function_code=cst.READ_DISCRETE_INPUTS,
+                                         starting_address=starting_address, quantity_of_x=quantity_of_x)
+            return result
+        except modbus_tk.modbus.ModbusError, error:
+            self._process_error(except_object=error, msg="Could not read register: %d" % starting_address)
+
     def write_multiple_registers(self, slave, starting_address, datas):
         """
             Write registers
